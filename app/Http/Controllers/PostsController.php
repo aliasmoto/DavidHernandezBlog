@@ -22,13 +22,17 @@ class PostsController extends Controller
     /**
      * Display a listing of the resource.
      *
+	 * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-		// $posts = Post::all();
 		$posts = Post::orderBy('publication_date', 'desc')->get();
-        return view('posts.index')->with('posts', $posts);
+		if($request->submit == "asc"){
+			$posts = Post::orderBy('publication_date', 'asc')->get();
+		}
+
+		return view('posts.index')->with('posts', $posts);
     }
 
     /**
@@ -96,7 +100,7 @@ class PostsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+		//
     }
 
     /**

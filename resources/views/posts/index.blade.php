@@ -1,16 +1,21 @@
 @extends('layouts.app')
 
 @section('content')
-	<div class="container">
-		<div class="row">
-			<div class="col">
-				<h1>All posts</h1>
-			</div>
-			<div class="col">
-				<button class="btn btn-outline-primary">
-					Order by publication date
+	<div class="card-body row">
+		<div class="col">
+			<h1>All posts</h1>
+		</div>
+
+		<div class="mb-2 col">
+			<form class="form-inline" action="/posts" method="get">
+				<p>Sory by publication date: </p>
+				<button class="btn btn-outline-primary ml-3 mr-3" type="submit" name = "submit" value = "asc">
+					asc
 				</button>
-			</div>
+				<button class="btn btn-outline-primary" type="submit" name = "submit" value = "desc">
+					desc
+				</button>
+			</form
 		</div>
 	</div>
 
