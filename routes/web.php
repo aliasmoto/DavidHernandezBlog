@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', 'PostsController@index');
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/posts/importDataFromApi', 'PostsController@storeFromApi')->name('storeFromApi');
 
 Route::resource('posts', 'PostsController');
 

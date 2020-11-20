@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Http;
 use Illuminate\Http\Request;
+use GuzzleHttp\Client; // To invalid ssl
 use App\Post;
 use DateTime;
-use DB;
 
 class PostsController extends Controller
 {
@@ -66,6 +67,34 @@ class PostsController extends Controller
 		$post->save();
 
 		return redirect('/posts')->with('success', 'Post created');
+    }
+
+	/**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function storeFromApi(Request $request)
+    {
+		// Obtain data fron Api rest
+		$client = new Client(["verify" => false]);
+		$client = $client->get('https://sq1-api-test.herokuapp.com/posts')->getBody()->getContents();
+		$client = json_decode($client, true); // Transform string to json
+
+		if (!empty($client) && !empty($client['data'])){
+			//go through the array and create the posts
+			foreach ($client['data'] as $postData) {
+				$post = new Post;
+				$post->title = $postData['title'];
+				$post->description = $postData['description'];
+				$post->publication_date =  $postData['publication_date'];
+				$post->user_id = auth()->user()->id;
+				$post->save();
+			}
+		}
+
+		return redirect('/posts')->with('success', 'Posts created');
     }
 
     /**
