@@ -20,12 +20,22 @@ class HomeController extends Controller
     /**
      * Show the application dashboard.
      *
+	 * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function index(Request $request)
     {
+		//Get the auth user to display his posts
 		$user_id = auth()->user()->id;
 		$user = User::find($user_id);
-        return view('home')->with('posts', $user->posts);
+
+		//Depending on the value obtained by pressing the button,
+		//we order according to this
+		$posts = $user->posts->sortByDesc('publication_date');
+		if($request->submit == "asc"){
+			$posts = $user->posts->sortBy('publication_date');
+		}
+
+		return view('home')->with('posts', $posts);
     }
 }

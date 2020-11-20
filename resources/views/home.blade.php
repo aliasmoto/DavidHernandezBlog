@@ -14,11 +14,26 @@
                         </div>
                     @endif
 
+					{{-- As it is in the home page, it will only be visible to the user --}}
 					<a href="/posts/create" class="btn btn-primary">Create new post</a>
 
+					{{-- Sort by publication date --}}
 					<div class="container mt-5">
-						<h3>Your Personal Posts</h3>
-						@if(count($posts) > 0)
+						<div class="row">
+							<h3>Your Personal Posts</h3>
+							@if(count($posts) > 0)
+								<div class="mb-2 col">
+									<form class="form-inline" action="/home" method="get">
+										<p>Sory by publication date: </p>
+										<button class="btn btn-outline-primary ml-3 mr-3" type="submit" name = "submit" value = "asc">
+											asc
+										</button>
+										<button class="btn btn-outline-primary" type="submit" name = "submit" value = "desc">
+											desc
+										</button>
+									</form>
+								</div>
+						</div>
 						<div class="card">
 							<ul class = "list-group list-group flush">
 							@foreach($posts as $post)
