@@ -19,16 +19,19 @@
 					<div class="container mt-5">
 						<h3>Your Personal Posts</h3>
 						@if(count($posts) > 0)
-						<table class="table table-striped">
-							<tr>
-								<th>Title</th>
-							</tr>
+						<div class="card">
+							<ul class = "list-group list-group flush">
 							@foreach($posts as $post)
-								<tr>
-									<th>{{$post->title}}</th>
-								</tr>
+								<li class="list-group-item">
+									<h3><a href="/posts/{{$post->id}}">{{$post->title}}</a></h3>
+									<ul>
+										<li>Description: {{$post->description}}</li>
+										<li>Written on: {{$post->publication_date}}</li>
+									</ul>
+								</li>
 							@endforeach
-						</table>
+							</ul>
+						</div>
 						@else
 							<p>You have no posts.</p>
 						@endif
